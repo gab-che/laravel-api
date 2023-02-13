@@ -25,11 +25,15 @@
             <div class="form-check" @error($input_name) is-invalid @enderror>
                 <input type="checkbox" @error($input_name) is-invalid @enderror
                 id="techCheck_{{$loop->index}}" value="{{$var->id}}" name="{{$input_name}}[]"
-                {{$old_value->contains('id', $var->id) ? 'checked' : ''}}>
+                @if(Route::is('admin.projects.create'))
+                    {{in_array($var->id, old($input_name, [])) ? 'checked' : ''}}
+                @elseif(Route::is('admin.projects.edit'))
+                    {{$old_value->contains('id', $var->id) ? 'checked' : ''}}>
+                @endif
                 <label class="form-check-label" for="techCheck_{{$loop->index}}">{{$var->name}}</label>
             </div>
         @endforeach
-        
+
     @else
         <input type="{{$type}}" class="form-control" name="{{$input_name}}" value="{{old($input_name, $old_value)}}" @error($input_name) is-invalid @enderror>
     @endif

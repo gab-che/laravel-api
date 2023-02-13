@@ -61,7 +61,7 @@
                             @foreach ($types as $type)
                                 <tr>
                                     <td>{{$type->name}}</td>
-                                    <td>{{$type->projects_count}}</td>
+                                    <td>{{$type->projects->count()}}</td>
                                     <td><a href="{{route('admin.types.show', $type)}}" class="btn btn-outline-info"><i class="fa-solid fa-eye"></i></a></td>
                                     <td>
                                         <a href="{{route('admin.types.edit', $project)}}" class="btn btn-outline-primary"><i class="fa-solid fa-pencil"></i></a>

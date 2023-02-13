@@ -15,6 +15,7 @@
                     <thead>
                         <th>Titolo</th>
                         <th>Descrizione</th>
+                        <th>Stack</th>
                         <th>Tipo</th>
                         <th>Link Github</th>
                         <th>Immagine</th>
@@ -30,6 +31,9 @@
                                 </td>
                                 <td>
                                     {{Str::limit($project->description)}}
+                                </td>
+                                <td>
+                                    {{$project->technologies->implode('name', ', ')}}
                                 </td>
                                 <td>
                                     {{$project->type->name}}

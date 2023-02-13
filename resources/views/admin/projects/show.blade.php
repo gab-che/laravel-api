@@ -9,6 +9,11 @@
                     <div class="card-body">
                         <h5 class="card-title">{{$project->name}}</h5>
                         <p class="card-text">{{$project->description}}</p>
+                        <p class="card-text">Stack: 
+                            @foreach ($project->technologies as $tech)
+                                <span class="badge rounded-pill text-bg-info">{{$tech->name}}</span>
+                            @endforeach
+                        </p>
                         <p class="card-text">Category: {{$project?->type->name}}</p>
                     </div>
                     <div class="card-footer d-flex justify-content-between">

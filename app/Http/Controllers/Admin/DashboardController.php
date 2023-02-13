@@ -15,7 +15,7 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
         $projects = Project::orderBy('created_at', 'DESC')->limit(5)->get();
-        $types = Type::withCount('projects')->get();
+        $types = Type::all();
 
         return view('admin.dashboard', compact(['user', 'projects', 'types']));
     }
