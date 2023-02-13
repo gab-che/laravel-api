@@ -23,57 +23,113 @@
                     </div>
                     @endif
                     {{ __('You are logged in, ' . $user->name .' !') }}
-                    
-                    <h5>Ultimi progetti inseriti</h5>
-                    <table class="table">
-                        <thead>
-                            <th>Id</th>
-                            <th>Titolo</th>
-                            <th>Tipo</th>
-                            <th>Data Aggiunta</th>
-                            <th>Vedi</th>
-                        </thead>
-                        <tbody>
-                            @foreach ($projects as $project)
+                    {{-- latest projects --}}
+                    <div class="mb-5">
+                        <h5>Ultimi progetti inseriti</h5>
+                        <table class="table">
+                            <thead>
                                 <tr>
-                                    <td>{{$project->id}}</td>
-                                    <td>{{$project->name}}</td>
-                                    <td>{{$project->type->name}}</td>
-                                    <td>{{$project->created_at}}</td>
-                                    <td>
-                                        <a href="{{route('admin.projects.show', $project)}}" class="btn btn-outline-info"><i class="fa-solid fa-eye"></i></a>
-                                    </td>
+                                    <th>Id</th>
+                                    <th>Titolo</th>
+                                    <th>Tipo</th>
+                                    <th>Data Aggiunta</th>
+                                    <th>Vedi</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach ($projects as $project)
+                                    <tr>
+                                        <td>{{$project->id}}</td>
+                                        <td>{{$project->name}}</td>
+                                        <td>{{$project->type->name}}</td>
+                                        <td>{{$project->created_at}}</td>
+                                        <td>
+                                            <a href="{{route('admin.projects.show', $project)}}" class="btn btn-outline-info"><i class="fa-solid fa-eye"></i></a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
 
-                    <h5>Tipologie di progetto</h5>
-                    <table class="table">
-                        <thead>
-                            <th>Nome</th>
-                            <th>N. progetti</th>
-                            <th>Vedi</th>
-                            <th>Modifica</th>
-                            <th>Elimina</th>
-                        </thead>
-                        <tbody>
-                            @foreach ($types as $type)
+                    {{-- all types --}}
+                    <div class="mb-5">
+                        <h5>Tipologie di progetto</h5>
+                        <table class="table">
+                            <thead>
                                 <tr>
-                                    <td>{{$type->name}}</td>
-                                    <td>{{$type->projects->count()}}</td>
-                                    <td><a href="{{route('admin.types.show', $type)}}" class="btn btn-outline-info"><i class="fa-solid fa-eye"></i></a></td>
-                                    <td>
-                                        <a href="{{route('admin.types.edit', $project)}}" class="btn btn-outline-primary"><i class="fa-solid fa-pencil"></i></a>
-                                    </td>
-                                    <td>elimina</td>
+                                    <th>Nome</th>
+                                    <th>N. progetti</th>
+                                    <th>Vedi</th>
+                                    <th>Modifica</th>
+                                    <th>Elimina</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach ($types as $type)
+                                    <tr>
+                                        <td>{{$type->name}}</td>
+                                        <td>{{$type->projects->count()}}</td>
+                                        <td><a href="{{route('admin.types.show', $type)}}" class="btn btn-outline-info"><i class="fa-solid fa-eye"></i></a></td>
+                                        <td>
+                                            <a href="{{route('admin.types.edit', $type)}}" class="btn btn-outline-primary"><i class="fa-solid fa-pencil"></i></a>
+                                        </td>
+                                        <td>
+                                            @include('admin.projects.partials.delete_form', [
+                                                'route' => 'admin.types.destroy',
+                                                'table' => $type,
+                                                'class' => 'delete_type'
+                                            ])
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+
+                    {{-- all technologies --}}
+                    <div class="mb-5">
+                        <h5>Tecnologie usate</h5>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>N. Progetti</th>
+                                    <th>Vedi</th>
+                                    <th>Modifica</th>
+                                    <th>Elimina</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($technologies as $tech)
+                                    <tr>
+                                        <td>{{$tech->name}}</td>
+                                        <td>{{$tech->projects->count()}}</td>
+                                        <td>V</td>
+                                        <td>M</td>
+                                        <td>C</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    const delTypeForm = document.querySelectorAll('.delete_type');
+
+    delTypeForm.forEach((form) =>{
+        form.addEventListener('submit', function(e){
+            e.preventDefault();
+            const confirm_del = confirm('Sicuro di voler eliminare questa tipologia?');
+            if(confirm_del){
+                form.submit();
+            }
+        })
+    })
+</script>
 @endsection

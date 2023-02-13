@@ -37,10 +37,11 @@ class TypeController extends Controller
      */
     public function store(Request $request)
     {
-        // creare StoreTypeRequest
-        // $data = $request->validated();
+        $data = $request->validate([
+            'name' => 'required|max:255'
+        ]);
 
-        $type = Type::create();
+        $type = Type::create($data);
         return redirect()->route('types.show', [$type]);
     }
 
@@ -75,9 +76,11 @@ class TypeController extends Controller
      */
     public function update(Request $request, Type $type)
     {
-        // creare UpdateTypeRequest
-        // $data = $request->all();
-        $type->update();
+        $data = $request->validate([
+            'name' => 'required|max:255'
+        ]);
+
+        $type->update($data);
         return redirect()->route('types.show', compact('type'));
     }
 

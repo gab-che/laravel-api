@@ -20,7 +20,11 @@
                         <a href="{{$project->github_link}}" target="_blank">Check repo</a>
                         <div class="card_buttons d-flex gap-2">
                             <a href="{{route('admin.projects.edit', $project)}}" class="btn btn-outline-primary"><i class="fa-solid fa-pencil"></i></a>
-                            @include('admin.projects.partials.delete_project_form')
+                            @include('admin.projects.partials.delete_form', [
+                                'route' => 'admin.projects.destroy',
+                                'table' => $project,
+                                'class' => 'delete_project'
+                            ])
                         </div>
                     </div>
                 </div>
@@ -36,7 +40,7 @@
     </div>
 
     <script>
-        const form = document.querySelector('.delete_form')
+        const form = document.querySelector('.delete_project')
         form.addEventListener('submit', function(e){
             e.preventDefault();
             const confirm_del = confirm('Sicuro di voler eliminare questo progetto?');

@@ -51,7 +51,11 @@
                                     <a href="{{route('admin.projects.edit', $project)}}" class="btn btn-outline-primary"><i class="fa-solid fa-pencil"></i></a>
                                 </td>
                                 <td>
-                                    @include('admin.projects.partials.delete_project_form')
+                                    @include('admin.projects.partials.delete_form', [
+                                        'route' => 'admin.projects.destroy',
+                                        'table' => $project,
+                                        'class' => 'delete_project'
+                                    ])
                                 </td>
                             </tr>
                         @endforeach
@@ -62,7 +66,7 @@
     </div>
 
     <script>
-        const forms = document.querySelectorAll('.delete_form');
+        const forms = document.querySelectorAll('.delete_project');
 
         forms.forEach((form) =>{
             form.addEventListener('submit', function(e){
