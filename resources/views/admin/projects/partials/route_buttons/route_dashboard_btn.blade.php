@@ -1,0 +1,1 @@
+<a href="{{route('admin.dashboard')}}" class="btn btn-dark">Torna alla dashboard</a>
