@@ -26,4 +26,10 @@
         'array' => $types,
         'old_value' => $project->type_id
     ])
-    
+    @include('admin.projects.partials.input_form', [
+        'input_name' => 'technologies',
+        'label' => 'Stack',
+        'type' => 'checkbox',
+        'array' => $technologies,
+        'old_value' => $project->technologies
+    ])

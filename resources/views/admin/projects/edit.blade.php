@@ -9,7 +9,6 @@
                     @csrf
                     @method('put')
                     @include('admin.projects.partials.new_project_form')
-                    
                     <button class="btn btn-outline-dark" type="submit">Modifica</button>
                     @include('admin.projects.partials.route_buttons.route_index_proj_btn', 
                     ['btn_text' => 'Annulla',

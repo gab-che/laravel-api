@@ -28,7 +28,8 @@ class UpdateProjectRequest extends FormRequest
             'description' => 'required|string|min:100',
             'github_link' => 'required|url|regex:/github/',
             'cover_img' => 'required|image',
-            'type_id' => 'nullable|exists:types,id'
+            'type_id' => 'nullable|exists:types,id',
+            'technologies' => 'nullable|exists:technologies,id|array'
         ];
     }
 
@@ -43,6 +44,7 @@ class UpdateProjectRequest extends FormRequest
             'github_link.url' => 'Inserisci un link >.<',
             'github_link.regex' => 'Inserisci un link github!',
             'cover_img.image' => 'Carica un\'immagine',
+            'technologies.exists' => 'Campo non valido'
         ];
     }
 }

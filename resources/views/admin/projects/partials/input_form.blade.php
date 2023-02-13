@@ -11,15 +11,25 @@
         <textarea name="{{$input_name}}" class="form-control" @error($input_name) is-invalid @enderror>{{old($input_name, $old_value)}}</textarea>
 
     @elseif($type === 'select')
-        <select name="{{$input_name}}" class="form-select" value="{{old($input_name, $old_value)}}" @error($input_name) is-invalid @enderror>
+        <select name="{{$input_name}}" class="form-select" @error($input_name) is-invalid @enderror>
             <option></option>
             @foreach ($array as $var)
-                <option value="{{$var->id}}">
+                <option value="{{$var->id}}" {{$var->id === old($input_name, $old_value) ? 'selected' : ''}}>
                     {{$var->name}}
                 </option>
             @endforeach
         </select>
 
+    @elseif($type === 'checkbox')
+        @foreach ($array as $var)
+            <div class="form-check" @error($input_name) is-invalid @enderror>
+                <input type="checkbox" @error($input_name) is-invalid @enderror
+                id="techCheck_{{$loop->index}}" value="{{$var->id}}" name="{{$input_name}}[]"
+                {{$old_value->contains('id', $var->id) ? 'checked' : ''}}>
+                <label class="form-check-label" for="techCheck_{{$loop->index}}">{{$var->name}}</label>
+            </div>
+        @endforeach
+        
     @else
         <input type="{{$type}}" class="form-control" name="{{$input_name}}" value="{{old($input_name, $old_value)}}" @error($input_name) is-invalid @enderror>
     @endif

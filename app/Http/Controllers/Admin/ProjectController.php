@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
+use App\Models\Technology;
 use App\Models\Type;
 use Illuminate\Support\Facades\Storage;
 
@@ -33,7 +34,8 @@ class ProjectController extends Controller
     public function create(Project $project)
     {
         $types = Type::all();
-        return view('admin.projects.create', compact('project', 'types'));
+        $technologies = Technology::all();
+        return view('admin.projects.create', compact('project', 'types', 'technologies'));
     }
 
     /**
@@ -54,6 +56,10 @@ class ProjectController extends Controller
             ...$data,
             'cover_img' => $path ?? ''
         ]);
+
+        if ($request->has('technologies')) {
+            $project->technologies()->attach($data['technologies']);
+        }
 
         return redirect()->route('admin.projects.show', [$project]);
     }
@@ -78,7 +84,8 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $types = Type::all();
-        return view('admin.projects.edit', compact('project', 'types'));
+        $technologies = Technology::all();
+        return view('admin.projects.edit', compact('project', 'types', 'technologies'));
     }
 
     /**
@@ -102,6 +109,10 @@ class ProjectController extends Controller
             ...$data,
             'cover_img' => $path ?? $project->cover_img
         ]);
+
+        if ($request->has('technologies')) {
+            $project->technologies()->sync($data['technologies']);
+        }
 
         return redirect()->route('admin.projects.show', compact('project'));
     }
