@@ -133,4 +133,16 @@ class ProjectController extends Controller
         $project->delete($project);
         return redirect()->route('admin.projects.index');
     }
+
+    /**
+     * Delete records from pivot table (project_technology)
+     */
+    public function detachTechnologies()
+    {
+        $projects = Project::all();
+        foreach ($projects as $project) {
+            $project->technologies()->detach();
+        }
+        return $projects;
+    }
 }
