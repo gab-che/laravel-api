@@ -8,9 +8,16 @@ use Illuminate\Http\Request;
 
 class ProjectController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $projects = Project::paginate();
+        $last5 = $request->input('last5');
+
+        if ($last5) {
+            $projects = Project::with('type', 'technologies')->orderBy('id', 'DESC')->limit(5)->get();
+        } else {
+            $projects = Project::with('type')->paginate(10);
+        }
+
         return response()->json($projects);
     }
 
