@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Mail\NewContact;
 use App\Models\Contact;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
 class ContactController extends Controller
@@ -24,6 +26,8 @@ class ContactController extends Controller
         }
 
         $newContact = Contact::create($data);
+
+        Mail::to('admin@gab-che.it')->send(new NewContact($newContact));
         return response()->json($newContact);
     }
 }

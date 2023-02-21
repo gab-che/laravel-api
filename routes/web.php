@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\TypeController;
@@ -28,6 +29,7 @@ Route::middleware(['auth', 'verified'])
         Route::get('/dashboard', [DashboardController::class, 'home'])->name('dashboard');
         Route::resource('/projects', ProjectController::class);
         Route::resource('/types', TypeController::class);
+        Route::resource('/contacts', ContactController::class);
     });
 
 Route::middleware('auth')->group(function () {
